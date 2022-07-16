@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEndKino.Entitys;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BackEndKino
 {
@@ -15,53 +17,43 @@ namespace BackEndKino
        
         public static void Main(string[] args)
         {
-            
-            using (DB.AppContext DB = new DB.AppContext())
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
             {
-                Tag tag = new Tag
-                {
-                    Name = "Комедия"
-                };
-                Tag tag1 = new Tag
-                {
-                    Name = "Драма"
-                };
-                Tag tag2 = new Tag
-                {
-                    Name = "Боевик"
-                };
-                Tag tag3 = new Tag
-                {
-                    Name = "Аниме"
-                };
-                DB.Tags.AddRange(tag, tag1, tag2, tag3);
-                DB.SaveChanges();
-                
-
-                Movie m = new Movie
-                {
-                    Name="Халк",
-                    Tags= new List<Tag> { tag,tag2,tag3 }
-                };
-                Movie m1 = new Movie
-                {
-                    Name = "Твое имя",
-                    Tags = new List<Tag> { tag1 }
-                };
-
-                DB.Movies.AddRange(m,m1);
-                DB.SaveChanges();
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
-            CreateHostBuilder(args).Build().Run();
-            
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+            //CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+
+                    
+                    //webBuilder.UseStartup<Startup>();
                 });
     }
 }
