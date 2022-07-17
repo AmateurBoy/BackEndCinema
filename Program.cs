@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using BackEndKino.Entitys;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using BackEndKino.DB.DAO;
+using System.Runtime.Intrinsics.X86;
 
 namespace BackEndKino
 {
@@ -17,13 +19,13 @@ namespace BackEndKino
        
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
+            
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BackEndKino.Entitys
 {
-    public class Ticket
+    public class Ticket : ITablekay
     {
         public int Id { get; set; }
         public virtual Session Session { get; set; }

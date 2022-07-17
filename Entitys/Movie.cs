@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BackEndKino.Entitys
 {
-    public class Movie
+    public class Movie : ITablekay
     {
         public int Id { get; set; }
         public string Name { get; set; }
