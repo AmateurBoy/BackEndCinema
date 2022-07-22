@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="DB\DTO\" />
+    <Folder Include="wwwroot\resources\images\" />
   </ItemGroup>
 
 </Project>

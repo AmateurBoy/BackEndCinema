@@ -10,7 +10,7 @@ namespace BackEndKino.Entitys
         public int Id { get; set; }
         public string Name { get; set; }
         public string Disc { get; set; }
-        public string NameImg { get; set; }
+        public string mainImageName { get; set; }
         public string URLtrailer { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Session> Sessions { get; set; }        

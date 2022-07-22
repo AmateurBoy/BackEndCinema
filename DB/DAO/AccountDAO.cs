@@ -10,13 +10,14 @@ namespace BackEndKino.DB.DAO
     {
         public Account Add(Account acc)
         {
-            using(AppContext AC = new())
+            using(ApplicationContext AC = new())
             {
                 Account account = acc;
                                
                 if (AC.Accounts.FirstOrDefault(x => x.Id == account.Id) == null)
                 {
                     AC.Accounts.Add(account);
+                    AC.SaveChanges();
                     return account;
                 }
                 else
@@ -29,11 +30,12 @@ namespace BackEndKino.DB.DAO
         }
         public bool Delate(int id)
         {
-            using(AppContext AC = new())
+            using(ApplicationContext AC = new())
             {
                 try
                 {
                     AC.Accounts.Remove(AC.Accounts.FirstOrDefault(x => x.Id == id));
+                    AC.SaveChanges();
                     return true;
                 }
                 catch
@@ -45,7 +47,7 @@ namespace BackEndKino.DB.DAO
         }
         public List<Account> GetAll()
         {
-            using (AppContext AC = new())
+            using (ApplicationContext AC = new())
             {
                 var accounts = AC.Accounts.ToList();                
                 return accounts;
@@ -53,7 +55,7 @@ namespace BackEndKino.DB.DAO
         }
         public Account GetbyID(int Id)
         {
-            using (AppContext AC = new())
+            using (ApplicationContext AC = new())
             {
                 var account = AC.Accounts.FirstOrDefault(x => x.Id == Id);
                 if ( account != null)

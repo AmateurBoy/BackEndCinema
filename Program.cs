@@ -23,7 +23,9 @@ namespace BackEndKino
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            
+            builder.Services.AddAuthorization();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
@@ -34,28 +36,31 @@ namespace BackEndKino
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
+           
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Values}/{action=Index}/{id?}");
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
             app.Run();
-            //CreateHostBuilder(args).Build().Run();
+
+           // CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-
-                    
-                    //webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

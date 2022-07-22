@@ -10,7 +10,7 @@ namespace BackEndKino.DB.DAO
     {
         public Billing Add(Billing b)
         {
-            using (DB.AppContext AC = new())
+            using (DB.ApplicationContext AC = new())
             {
                 Billing account = b;
                 
@@ -29,7 +29,7 @@ namespace BackEndKino.DB.DAO
         }
         public bool Delate(int id)
         {
-            using (DB.AppContext AC = new())
+            using (DB.ApplicationContext AC = new())
             {
                 try
                 {
@@ -45,7 +45,7 @@ namespace BackEndKino.DB.DAO
         }
         public List<Billing> GetAll()
         {
-            using (DB.AppContext AC = new())
+            using (DB.ApplicationContext AC = new())
             {
                 var accounts = AC.Billings.ToList();
                 return accounts;
@@ -53,7 +53,7 @@ namespace BackEndKino.DB.DAO
         }
         public Billing GetbyID(int Id)
         {
-            using (DB.AppContext AC = new())
+            using (DB.ApplicationContext AC = new())
             {
                 var billings = AC.Billings.FirstOrDefault(x => x.Id == Id);
                 if (billings != null)
