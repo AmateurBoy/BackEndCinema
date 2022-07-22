@@ -1,7 +1,11 @@
 ﻿using BackEndKino.DB;
 using BackEndKino.DB.DAO;
 using BackEndKino.Entitys;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BackEndKino.Controllers
 {
@@ -24,10 +28,19 @@ namespace BackEndKino.Controllers
             return Redirect("/index.html");
         }
         [HttpPost("admin/movies")]
-        public IActionResult AddMovies(Movie M)
+       
+        public async Task<IActionResult> Upload(IFormCollection IFF)
         {
-            DTO.Add(M);
-            return View(M.Id);
+            var file = IFF.Files[0];
+
+            string filePut = @$"D:\C#\BackEndKino\wwwroot\resources\images\{file.FileName}"; 
+
+            using (var stream = System.IO.File.Create(filePut))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok(file);
         }
 
     }
