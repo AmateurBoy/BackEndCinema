@@ -15,6 +15,7 @@ namespace BackEndKino.DB.DAO
                 if (AC.Movies.FirstOrDefault(x => x.Id == Movies.Id) == null)
                 {
                     AC.Movies.Add(Movies);
+                    AC.SaveChanges();
                     return Movies;
                 }
                 else
@@ -32,6 +33,7 @@ namespace BackEndKino.DB.DAO
                 try
                 {
                     AC.Movies.Remove(AC.Movies.FirstOrDefault(x => x.Id == id));
+                    AC.SaveChanges();
                     return true;
                 }
                 catch

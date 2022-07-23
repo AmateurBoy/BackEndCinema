@@ -1,6 +1,7 @@
 ﻿using BackEndKino.DB;
 using BackEndKino.DB.DAO;
 using BackEndKino.Entitys;
+using BackEndKino.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace BackEndKino.Controllers
     public class MainController : Controller
     {
         public IDAO<Movie> DTO = new MoviesDAO();
-        public ApplicationContext AC = new();
-        
+       
+        public DownloadService DS = new();
+
         [HttpGet("/main/movies")]
         public IActionResult Index()
         {
@@ -27,20 +29,23 @@ namespace BackEndKino.Controllers
         {
             return Redirect("/index.html");
         }
-        [HttpPost("admin/movies")]
-       
+        [HttpPost("admin/movies")]       
         public async Task<IActionResult> Upload(IFormCollection IFF)
+        
         {
-            var file = IFF.Files[0];
 
-            string filePut = @$"D:\C#\BackEndKino\wwwroot\resources\images\{file.FileName}"; 
-
-            using (var stream = System.IO.File.Create(filePut))
+            Movie movie = new Movie
             {
-                await file.CopyToAsync(stream);
-            }
+                Name = IFF["name"],
+                Disc = IFF["description"],
+                URLtrailer = IFF["trailerURL"],
+                mainImageName = IFF.Files[0].FileName,
+            };
+            DS.Upload(IFF);
+            DTO.Add(movie);
+            
 
-            return Ok(file);
+            return Ok();
         }
 
     }
